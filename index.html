@@ -168,6 +168,10 @@
               var clases = ['Gato', 'Perro'];
               console.log("Prediccion", clases[mayorIndice]);
               document.getElementById("resultado").innerHTML = clases[mayorIndice];
+              const synth = window.speechSynthesis;
+             const utterThis = new SpeechSynthesisUtterance(clases[mayorIndice]);
+            utterThis.lang = 'es-ES';
+            synth.speak(utterThis);
           }
 
           setTimeout(predecir, 150);
