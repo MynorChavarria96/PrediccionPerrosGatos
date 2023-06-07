@@ -73,6 +73,9 @@
         <div class="text-secondary mt-5 px-4 py-2 text-center">
             <div class="py-5">
                 <h1 class="display-5 fw-bold text-white">Proyecto Final</h1>
+                <h2 class="fw-bold text-white">IA 2023</h2>
+                <h3 class="fw-bold text-white">UMG</h3>
+
             </div>
         </div>
 
@@ -170,11 +173,7 @@
         }
 
         function cambiarCamara() {
-            if (currentStream) {
-                currentStream.getTracks().forEach(track => {
-                    track.stop();
-                });
-            }
+            
 
             facingMode = facingMode == "user" ? "environment" : "user";
 
