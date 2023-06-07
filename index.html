@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="stylesheet" href="styles.css">
+
     <title>Perros y Gatos</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,14 +25,14 @@
             border: 1px solid #ccc;
         }
 
-        body{
-            background: rgb(2,0,36);
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,103,1) 35%, rgba(0,212,255,1) 100%);
+        body {
+            background: rgb(2, 0, 36);
+            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(121, 9, 103, 1) 35%, rgba(0, 212, 255, 1) 100%);
         }
-        h1{
+
+        h1 {
             color: white;
         }
-        
     </style>
 
 </head>
@@ -54,8 +54,8 @@
                     <video id="video" playsinline autoplay style="width: 1px;"></video>
                     <button class="btn btn-primary mb-2" id="cambiar-camara" onclick="cambiarCamara();">Cambiar
                         camara</button>
-                    <button id="muteButton" class="btn btn-primary mb-2">
-                        <ion-icon id="muteIcon" name="volume-high"></ion-icon>
+                    <button id="pauseButton" class="btn btn-primary mb-2">
+                        <ion-icon id="pauseIcon" name="play"></ion-icon>
                     </button>
                     <canvas id="canvas" width="400" height="400" style="max-width: 100%;"></canvas>
                     <canvas id="othercanvas" width="150" height="150" style="display: none"></canvas>
@@ -97,32 +97,44 @@
         var currentStream = null;
         var facingMode = "user"; //Para que funcione con el celular (user/environment)
 
-        (async () => {
-            console.log("Cargando modelo...");
-            modelo = await tf.loadLayersModel("model.json");
-            console.log("Modelo cargado...");
-        })();
+
 
         window.onload = function () {
-            mostrarCamara();
-            cambiarCamara();
+            
+            
             // Agrega un evento de clic al botón
-            document.getElementById('muteButton').addEventListener('click', toggleMute);
+            document.getElementById('pauseButton').addEventListener('click', togglePause);
         }
 
-        // Función para cambiar el icono y el estado de silencio
-        function toggleMute() {
+        // Función para Detetner la prediccion
+        function togglePause() {
             // Obtiene el botón y el icono
-            var muteButton = document.getElementById('muteButton');
-            var muteIcon = document.getElementById('muteIcon');
+            var pauseButton = document.getElementById('pauseButton');
+            var pauseIcon = document.getElementById('pauseIcon');
 
-            // Cambia el icono y el estado de silencio
-            if (muteIcon.getAttribute('name') === 'volume-high') {
-                muteIcon.setAttribute('name', 'volume-mute');
-                console.log("Cancel");
-                speechSynthesis.cancel();
+            // Cambia el icono y el estado pause
+            if (pauseIcon.getAttribute('name') === 'pause') {
+                pauseIcon.setAttribute('name', 'play');
+                detenerCamara();
+                modelo = null;
+
             } else {
-                muteIcon.setAttribute('name', 'volume-high');
+                pauseIcon.setAttribute('name', 'pause');
+                mostrarCamara();
+                cambiarCamara();
+                (async () => {
+                    console.log("Cargando modelo...");
+                    modelo = await tf.loadLayersModel("model.json");
+                    console.log("Modelo cargado...");
+                })();
+            }
+        }
+        function detenerCamara() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(function (track) {
+                    track.stop();
+                    document.getElementById("resultado").innerHTML = "--";
+                })
             }
         }
 
@@ -235,9 +247,7 @@
         function procesarCamara() {
 
             var ctx = canvas.getContext("2d");
-
             ctx.drawImage(video, 0, 0, size, size, 0, 0, size, size);
-
             setTimeout(procesarCamara, 20);
         }
 
