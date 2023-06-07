@@ -33,7 +33,8 @@
         h1 {
             color: white;
         }
-        p{
+
+        p {
             color: white !important;
         }
     </style>
@@ -107,8 +108,8 @@
 
 
         window.onload = function () {
-            
-            
+
+
             // Agrega un evento de clic al botón
             document.getElementById('pauseButton').addEventListener('click', togglePause);
         }
@@ -146,6 +147,11 @@
         }
 
         function mostrarCamara() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+            }
 
             var opciones = {
                 audio: false,
@@ -173,7 +179,7 @@
         }
 
         function cambiarCamara() {
-            
+
 
             facingMode = facingMode == "user" ? "environment" : "user";
 
