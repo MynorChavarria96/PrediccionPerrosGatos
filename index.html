@@ -147,11 +147,7 @@
         }
 
         function mostrarCamara() {
-            if (currentStream) {
-                currentStream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
-            }
+           
 
             var opciones = {
                 audio: false,
@@ -180,7 +176,11 @@
 
         function cambiarCamara() {
 
-
+            if (currentStream) {
+                currentStream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+            }
             facingMode = facingMode == "user" ? "environment" : "user";
 
             var opciones = {
