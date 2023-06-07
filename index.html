@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="stylesheet" href="styles.css">
     <title>Perros y Gatos</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,12 +17,22 @@
             font-weight: bold;
             font-size: 6rem;
             text-align: center;
+            color: white !important;
         }
 
         .canvas-container {
             margin: 0 auto;
             border: 1px solid #ccc;
         }
+
+        body{
+            background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,103,1) 35%, rgba(0,212,255,1) 100%);
+        }
+        h1{
+            color: white;
+        }
+        
     </style>
 
 </head>
@@ -30,8 +41,8 @@
 
     <main>
         <div class="px-4 py-2 my-2 text-center border-bottom">
-            <img class="d-block mx-auto mb-2" src="Logotipo.png" alt="" width="80" height="80">
-            <h1 class="display-5 fw-bold">Perros y gatos</h1>
+            <img class="d-block mx-auto mb-2" src="Logo.png" alt="" width="120" height="120">
+            <h1 class="display-5 fw-bold">Detector Web de Mascotas</h1>
 
         </div>
 
@@ -55,7 +66,7 @@
 
         <div class="b-example-divider"></div>
 
-        <div class="bg-dark text-secondary mt-5 px-4 py-2 text-center">
+        <div class="text-secondary mt-5 px-4 py-2 text-center">
             <div class="py-5">
                 <h1 class="display-5 fw-bold text-white">Proyecto Final</h1>
             </div>
@@ -216,12 +227,9 @@
 
         function speech(texto) {
             const synth = window.speechSynthesis;
-   
-                const utterThis = new SpeechSynthesisUtterance(texto);
-                utterThis.lang = 'es-ES';
-                synth.speak(utterThis);
-
-
+            const utterThis = new SpeechSynthesisUtterance(texto);
+            utterThis.lang = 'es-US';
+            synth.speak(utterThis);
         }
 
         function procesarCamara() {
